@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Webapp</title>
+    <title>Weather Dashboard</title>
     <link rel="apple-touch-icon" sizes="180x180" href="resources/weather-favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="resources/weather-favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="resources/weather-favicon/favicon-16x16.png">
@@ -40,10 +40,21 @@
                         class="px-4 py-2 bg-gray-500 text-white w-full rounded-md mb-4">Current
                         Location</button>
                     <div>
-                        <button id="recentBtn" class="px-4 w-full py-2 bg-gray-500 text-white  hidden rounded-md">Recent
+                        <!-- <button id="recentBtn" class="px-4 w-full py-2 bg-gray-500 text-white  hidden rounded-md">Recent
                             Search</button>
                         <div id="recentCities"
                             class="mt-2 bg-white border rounded-md shadow-lg py-2 hidden overflow-y-auto h-32 ">
+                        </div>
+
+                        <br> -->
+                        <div>
+                            <!-- Dropdown -->
+                            <label for="recentCities" class="block text-gray-700 hidden">Recent
+                                Searches</label>
+                            <select id="recentCities"
+                                class="mt-1 w-full px-4 py-2 bg-gray-500 text-white rounded-md hidden">
+                                <option value="">Select a recent search</option>
+                            </select>
                         </div>
                     </div>
                 </div>
