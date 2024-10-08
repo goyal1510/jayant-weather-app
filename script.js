@@ -34,8 +34,8 @@ function updateWeatherUI(data) {
   const description =
     data.weather[0].description.charAt(0).toUpperCase() +
     data.weather[0].description.slice(1);
-  // const cityInput = document.getElementById("cityInput");
-  // cityInput.value = data.name;
+  const cityInput = document.getElementById("cityInput");
+  cityInput.value = data.name;
 
   let bgColor;
   if (description.includes("cloud")) {
@@ -168,41 +168,79 @@ function saveRecentCity(city) {
 
   localStorage.setItem("recentCities", JSON.stringify(cities));
   if (cities.length >= 1) {
-    recentButton.classList.remove("hidden");
+    const recentCitiesElem = document.getElementById("recentCities");
+    recentCitiesElem.classList.remove("hidden");
   }
   updateRecentCitiesDropdown();
 }
+
+// Update the recent cities dropdown menu
+// function updateRecentCitiesDropdown() {
+//   const recentCitiesElem = document.getElementById("recentCities");
+//   recentCitiesElem.innerHTML = "";
+//   const cities = JSON.parse(localStorage.getItem("recentCities")) || [];
+//   if (cities.length >= 1) {
+//     recentCitiesElem.classList.remove("hidden");
+//   }
+//   cities.forEach((city) => {
+//     const cityElem = document.createElement("option");
+//     cityElem.classList.add(
+//       "block",
+//       "px-4",
+//       "py-2",
+//       "hover:bg-gray-200",
+//       "w-full",
+//       "text-left"
+//     );
+//     cityElem.textContent = city;
+//     cityElem.value = city;
+//     cityElem.onclick = async () => {
+//       const weatherData = await getWeatherByCity(city);
+//       const forecastData = await get5DayForecastByCity(city);
+//       const cityInput = document.getElementById("cityInput");
+//       cityInput.value = city;
+//       updateWeatherUI(weatherData);
+//       updateForecastUI(forecastData);
+//       // hideRecentCities();
+//     };
+//     recentCitiesElem.appendChild(cityElem);
+//   });
+// }
 
 // Update the recent cities dropdown menu
 function updateRecentCitiesDropdown() {
   const recentCitiesElem = document.getElementById("recentCities");
   recentCitiesElem.innerHTML = "";
   const cities = JSON.parse(localStorage.getItem("recentCities")) || [];
-  if (cities.length >= 1) {
-    recentButton.classList.remove("hidden");
+
+  // Make the dropdown visible if there are recent searches
+  if (cities.length > 0) {
+    recentCitiesElem.classList.remove("hidden");
+    recentCitiesElem.innerHTML +=
+      '<option value="" disabled selected>Select a recent search</option>';
+  } else {
+    recentCitiesElem.classList.add("hidden");
   }
+
   cities.forEach((city) => {
-    const cityElem = document.createElement("button");
-    cityElem.classList.add(
-      "block",
-      "px-4",
-      "py-2",
-      "hover:bg-gray-200",
-      "w-full",
-      "text-left"
-    );
+    const cityElem = document.createElement("option");
+    cityElem.value = city;
     cityElem.textContent = city;
-    cityElem.onclick = async () => {
-      const weatherData = await getWeatherByCity(city);
-      const forecastData = await get5DayForecastByCity(city);
-      const cityInput = document.getElementById("cityInput");
-      cityInput.value = city;
-      updateWeatherUI(weatherData);
-      updateForecastUI(forecastData);
-      hideRecentCities();
-    };
     recentCitiesElem.appendChild(cityElem);
   });
+
+  // Add an onchange event listener to the select element
+  recentCitiesElem.onchange = async () => {
+    const selectedCity = recentCitiesElem.value;
+    if (selectedCity) {
+      const weatherData = await getWeatherByCity(selectedCity);
+      const forecastData = await get5DayForecastByCity(selectedCity);
+      const cityInput = document.getElementById("cityInput");
+      cityInput.value = selectedCity;
+      updateWeatherUI(weatherData);
+      updateForecastUI(forecastData);
+    }
+  };
 }
 
 // Event listeners
@@ -246,27 +284,24 @@ async function get5DayForecastByLocation(lat, lon) {
   return await response.json();
 }
 
-const recentButton = document.getElementById("recentBtn");
+// const recentButton = document.getElementById("recentBtn");
 const recentCitiesElem1 = document.getElementById("recentCities");
 
-recentButton.addEventListener("click", () => {
-  recentCitiesElem1.style.display = "block";
-  document.addEventListener("click", handleClickOutside);
-});
+// recentButton.addEventListener("click", () => {
+//   recentCitiesElem1.style.display = "block";
+//   document.addEventListener("click", handleClickOutside);
+// });
 
-function hideRecentCities() {
-  recentCitiesElem1.style.display = "none";
-  document.removeEventListener("click", handleClickOutside);
-}
+// function hideRecentCities() {
+//   recentCitiesElem1.style.display = "none";
+//   document.removeEventListener("click", handleClickOutside);
+// }
 
-function handleClickOutside(event) {
-  if (
-    !recentCitiesElem1.contains(event.target) &&
-    !recentButton.contains(event.target)
-  ) {
-    hideRecentCities();
-  }
-}
+// function handleClickOutside(event) {
+//   if (!recentCitiesElem1.contains(event.target)) {
+//     hideRecentCities();
+//   }
+// }
 
 // Automatically fetch and display the current location's weather on page load
 window.onload = () => {
