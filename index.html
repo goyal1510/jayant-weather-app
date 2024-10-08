@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-sans p-0 m-0 bg-[url('./resources/Backgound.jpg')] bg-cover">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center text-white mb-8">Weather Dashboard</h1>
+
+        <!-- Main Container for Search Controls and Forecast -->
+        <div id="weatherAppContainer" class="flex gap-8 bg-opacity-70">
+            <!-- Search Controls Section -->
+            <div id="searchControls" class="flex-col py-8 px-10 bg-gray-700 border rounded-md w-1/3 bg-opacity-70">
+                <div class="flex-col gap-2">
+
+                    <span class="text-xl text-white font-bold">Enter the city : </span>
+                    <div class="flex gap-2">
+                        <input id="cityInput" type="text" placeholder="Enter a city"
+                            class="p-2 border rounded-md w-full mb-2 mt-4" />
+
+                        <button id="searchBtn" class="px-2 h-10 bg-blue-500 text-white rounded-md mt-4 ">Search</button>
+                    </div>
+
+                </div>
+                <div class="text-center text-white text-xl mb-2">
+                    or
+                </div>
+                <div class="flex-col gap-2 justify-center">
+
+                    <button id="currentLocationBtn"
+                        class="px-4 py-2 bg-gray-500 text-white w-full rounded-md mb-4">Current
+                        Location</button>
+                    <div>
+                        <button id="recentBtn" class="px-4 w-full py-2 bg-gray-500 text-white  hidden rounded-md">Recent
+                            Search</button>
+                        <div id="recentCities"
+                            class="mt-2 bg-white border rounded-md shadow-lg py-2 hidden overflow-y-auto h-32 ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forecast Section -->
+            <div id="forecastSection" class="flex flex-col p-4 bg-gray-700 border rounded-md w-2/3 bg-opacity-70">
+                <div id="currentWeather" class="bg-blue-600  text-white p-4 rounded-md mb-4 flex-grow">
+                </div>
+                <h2 class="text-xl font-semibold text-center mt-4 mb-4 text-white">Future Forecast</h2>
+                <div id="forecast" class="flex gap-4 justify-center flex-grow"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
