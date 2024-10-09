@@ -179,7 +179,7 @@ function updateRecentCitiesDropdown() {
   if (cities.length > 0) {
     // Show the dropdown button with default text
     const dropdownButton = document.getElementById("dropdownButton");
-    dropdownButton.querySelector("span").textContent = "Select a recent search";
+    dropdownButton.querySelector("span").textContent = "Recent Searches";
   }
 
   cities.forEach((city) => {
