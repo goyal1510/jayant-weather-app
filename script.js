@@ -117,7 +117,9 @@ function updateForecastUI(forecastData) {
         "text-center",
         "flex",
         "flex-col",
-        "items-center"
+        "items-center",
+        "md:w-1/3",
+        "lg:w-1/5"
       );
 
       const formattedDate = formatDate(day);
@@ -286,22 +288,6 @@ async function get5DayForecastByLocation(lat, lon) {
 
 // const recentButton = document.getElementById("recentBtn");
 const recentCitiesElem1 = document.getElementById("recentCities");
-
-// recentButton.addEventListener("click", () => {
-//   recentCitiesElem1.style.display = "block";
-//   document.addEventListener("click", handleClickOutside);
-// });
-
-// function hideRecentCities() {
-//   recentCitiesElem1.style.display = "none";
-//   document.removeEventListener("click", handleClickOutside);
-// }
-
-// function handleClickOutside(event) {
-//   if (!recentCitiesElem1.contains(event.target)) {
-//     hideRecentCities();
-//   }
-// }
 
 // Automatically fetch and display the current location's weather on page load
 window.onload = () => {
