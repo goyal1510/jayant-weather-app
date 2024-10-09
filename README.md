@@ -1,6 +1,6 @@
 # Jayant Weather App
 
-A simple weather dashboard that provides current weather data and a 5-day forecast for a selected city or the user's current location. Built using JavaScript, HTML, Tailwind CSS, and the OpenWeatherMap API.
+A simple weather dashboard that provides current weather data and a future forecast for a selected city or the user's current location. Built using JavaScript, HTML, Tailwind CSS, and the OpenWeatherMap API.
 
 ## Features
 
@@ -8,7 +8,7 @@ Features
 
 - **Search Weather by City Name:** Users can enter any city name in the search bar to view its current weather and a forecast. This feature allows for a quick and convenient way to check the weather conditions of any desired location.
 
-- **Retrieve Current Weather and 5-Day Forecast Data:** The app provides instant access to current weather information, including temperature, wind speed, and humidity. Additionally, users can view a 5-day forecast, helping them plan for upcoming weather changes.
+- **Retrieve Current Weather and future Forecast Data:** The app provides instant access to current weather information, including temperature, wind speed, and humidity. Additionally, users can view a future forecast, helping them plan for upcoming weather changes.
 
 - **Location-Based Weather Information (Using Geolocation):** By clicking the "Current Location" button, users can receive weather data for their current location. This feature, leveraging geolocation, automatically detects the user's position and displays the relevant weather information.
 
