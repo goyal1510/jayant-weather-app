@@ -115,16 +115,14 @@ function updateForecastUI(forecastData) {
         "text-center",
         "flex",
         "flex-col",
-        "items-center",
-        "md:w-1/3",
-        "lg:w-1/5"
+        "items-center"
       );
 
       const formattedDate = formatDate(day);
 
       forecastElem.innerHTML = `
                 <p>${formattedDate}</p>
-                <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-12 h-12 mb-2" title="${description}"/>
+                <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-16 h-16 mb-2" title="${description}"/>
                 <p>Temp: ${forecast.main.temp}°C</p>
                 <p>Wind: ${forecast.wind.speed} m/s</p>
                 <p>Humidity: ${forecast.main.humidity}%</p>
