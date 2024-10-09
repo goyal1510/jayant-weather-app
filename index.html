@@ -19,15 +19,16 @@
         <!-- Main Container for Search Controls and Forecast -->
         <div id="weatherAppContainer" class="flex gap-8 bg-opacity-70">
             <!-- Search Controls Section -->
-            <div id="searchControls" class="flex-col py-8 px-10 bg-gray-700 border rounded-md w-1/3 bg-opacity-70">
+            <div id="searchControls" class="flex-col py-4 px-12 bg-gray-700 border rounded-md w-1/3 bg-opacity-70">
                 <div class="flex-col gap-2">
 
                     <span class="text-xl text-white font-bold">Enter the city : </span>
-                    <div class="flex gap-2">
+                    <div class="flex-col gap-2">
                         <input id="cityInput" type="text" placeholder="Enter a city"
-                            class="p-2 border rounded-md w-full mb-2 mt-4" />
+                            class="p-2 border rounded-md w-full mb-2 mt-2" />
 
-                        <button id="searchBtn" class="px-2 h-10 bg-blue-500 text-white rounded-md mt-4 ">Search</button>
+                        <button id="searchBtn"
+                            class="px-2 h-10 bg-blue-500 w-full text-white rounded-md mt-2">Search</button>
                     </div>
 
                 </div>
@@ -37,19 +38,30 @@
                 <div class="flex-col gap-2 justify-center">
 
                     <button id="currentLocationBtn"
-                        class="px-4 py-2 bg-gray-500 text-white w-full rounded-md mb-4">Current
+                        class="px-4 py-2 bg-gray-500 text-white w-full rounded-md mb-2">Current
                         Location</button>
                     <div>
 
-                        <div>
-                            <!-- Dropdown -->
-                            <label for="recentCities" class="block text-gray-700 hidden">Recent
-                                Searches</label>
-                            <select id="recentCities"
-                                class="mt-1 w-full px-4 py-2 bg-gray-500 text-white rounded-md hidden">
-                                <option value="">Select a recent search</option>
-                            </select>
+                        <!-- Custom Dropdown -->
+                        <div class="relative">
+                            <button id="dropdownButton"
+                                class="mt-1 w-full px-4 py-2 bg-gray-500 text-white rounded-md flex justify-between items-center hidden">
+                                <span>Recent Searches</span>
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div id="dropdownMenu"
+                                class="absolute mt-1 w-full bg-gray-500 text-white rounded-md shadow-lg max-h-32 overflow-y-auto hidden z-10">
+                                <ul id="recentCitiesList" class="py-1">
+                                    <!-- Recent cities will be appended here -->
+                                </ul>
+                            </div>
                         </div>
+                        <!-- End of Custom Dropdown -->
+
                     </div>
                 </div>
             </div>
