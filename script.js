@@ -48,26 +48,26 @@ function updateWeatherUI(data) {
     bgColor = "bg-blue-500";
   }
 
-  currentWeatherElem.className = `${bgColor} text-white p-4 rounded-md`;
+  currentWeatherElem.className = `${bgColor} text-white p-4 rounded-md transition-transform transition-shadow duration-300 hover:scale-y-110 hover:shadow-lg`;
   currentWeatherElem.innerHTML = `
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center ">
             <div class="flex flex-col">
-                <h1 class="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold">${
+                <h1 class="text-lg sm:text-2xl md:text-3xl lg:text-3xl font-bold">${
                   data.name
                 }</h1>
-                <h1 class="text-xs sm:text-lg md:text-xl lg:text-2xl">${formatDate(
+                <h1 class="text-xs sm:text-lg md:text-xl lg:text-xl">${formatDate(
                   new Date()
                 )}</h1>
                 <br>
-                <p class="text-xs mb-1 sm:text-lg md:text-xl lg:text-2xl"">Wind: ${
+                <p class="text-xs mb-1 sm:text-lg md:text-xl lg:text-xl"">Wind: ${
                   data.wind.speed
                 } m/s</p>
-                <p class="text-xs sm:text-lg md:text-xl lg:text-2xl"">Humidity: ${
+                <p class="text-xs sm:text-lg md:text-xl lg:text-xl"">Humidity: ${
                   data.main.humidity
                 }%</p>
             </div>
             <div class="text-right">
-                <p class="text-xl sm:text-2xl lg:text-5xl md:text-3xl"> ${
+                <p class="text-xl sm:text-2xl lg:text-4xl md:text-3xl"> ${
                   data.main.temp
                 }°C</p>
             </div>
@@ -125,7 +125,12 @@ function updateForecastUI(forecastData) {
         "text-center",
         "flex",
         "flex-col",
-        "items-center"
+        "items-center",
+        "transition-transform", // Enable transition for transform
+        "transition-shadow", // Enable transition for shadow
+        "duration-300", // Set duration for the transition
+        "hover:scale-105", // Scale on hover
+        "hover:shadow-lg"
       );
 
       const formattedDate = formatDate(day);
@@ -170,6 +175,7 @@ function saveRecentCity(city) {
 
   // Remove city if it already exists in the array, then add it to the beginning
   cities = cities.filter((c) => c.toLowerCase() !== city.toLowerCase());
+  city = city.charAt(0).toUpperCase() + city.slice(1);
   cities.unshift(city); // Add the city to the beginning of the array
 
   if (cities.length > 10) cities.pop(); // Limit to the last 10 searches
