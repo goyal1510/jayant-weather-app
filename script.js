@@ -52,18 +52,28 @@ function updateWeatherUI(data) {
   currentWeatherElem.innerHTML = `
         <div class="flex justify-between items-center">
             <div class="flex flex-col">
-                <h1 class="text-2xl font-bold">${data.name}</h1>
-                <h1 class="text-lg">${formatDate(new Date())}</h1>
+                <h1 class="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold">${
+                  data.name
+                }</h1>
+                <h1 class="text-xs sm:text-lg md:text-xl lg:text-2xl">${formatDate(
+                  new Date()
+                )}</h1>
                 <br>
-                <p>Wind: ${data.wind.speed} m/s</p>
-                <p>Humidity: ${data.main.humidity}%</p>
+                <p class="text-xs mb-1 sm:text-lg md:text-xl lg:text-2xl"">Wind: ${
+                  data.wind.speed
+                } m/s</p>
+                <p class="text-xs sm:text-lg md:text-xl lg:text-2xl"">Humidity: ${
+                  data.main.humidity
+                }%</p>
             </div>
             <div class="text-right">
-                <p class="lg:text-5xl md:text-3xl"> ${data.main.temp}°C</p>
+                <p class="text-xl sm:text-2xl lg:text-5xl md:text-3xl"> ${
+                  data.main.temp
+                }°C</p>
             </div>
             <div>
-                <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-30 h-30" title="${description}"/>
-                <p class="text-xl text-center">${description}</p>
+                <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-12 h-12 md:w-24 md:h-24 lg:w-30 md:h-30 " title="${description}"/>
+                <p class="text-lg text-center">${description}</p>
             </div>
         </div>
     `;
