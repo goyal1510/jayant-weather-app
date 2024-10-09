@@ -61,7 +61,7 @@ function updateWeatherUI(data) {
 
         </div>
         <div class="text-right">
-          <p class="text-5xl"> ${data.main.temp}°C</p>
+          <p class="lg:text-5xl md:text-3xl"> ${data.main.temp}°C</p>
         </div>
         <div>
           <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-30 h-30" title="${description}"/>
