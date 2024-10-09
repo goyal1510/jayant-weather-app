@@ -73,7 +73,7 @@ function updateWeatherUI(data) {
             </div>
             <div class="text-center">
             <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="mx-auto w-12 h-12 md:w-24 md:h-24 lg:w-30 md:h-30" title="${description}"/></p>
-                <p class="text-lg text-center">${description}</p>
+                <p class="text-xs sm:text-lg md:text-xl lg:text-xl text-center">${description}</p>
             </div>
         </div>
     `;
