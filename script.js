@@ -71,8 +71,8 @@ function updateWeatherUI(data) {
                   data.main.temp
                 }°C</p>
             </div>
-            <div>
-                <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-12 h-12 md:w-24 md:h-24 lg:w-30 md:h-30 " title="${description}"/>
+            <div class="flex-col justify-center items-center">
+                <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-12 h-12 md:w-24 md:h-24 lg:w-30 md:h-30  " title="${description}"/>
                 <p class="text-lg text-center">${description}</p>
             </div>
         </div>
