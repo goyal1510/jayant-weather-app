@@ -206,7 +206,7 @@ function updateRecentCitiesDropdown() {
   // If no cities, hide the dropdown
   if (cities.length === 0) {
     const dropdownButton = document.getElementById("dropdownButton");
-    dropdownButton.querySelector("span").textContent = "Select a recent search";
+    dropdownButton.querySelector("span").textContent = "Recently Searches";
   }
   if (cities.length > 0) {
     const dropdownButton = document.getElementById("dropdownButton");
