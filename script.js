@@ -1,4 +1,4 @@
-const apiKey = "48118fe8352ed4398205c8db917f6718"; // Replace with your actual API key
+const apiKey = "48118fe8352ed4398205c8db917f6718";
 
 // Function to fetch current weather data by city name
 async function getWeatherByCity(city) {
@@ -14,7 +14,7 @@ async function getWeatherByCity(city) {
   }
 }
 
-// Function to fetch 5-day forecast data by city name
+// Function to fetch future forecast data by city name
 async function get5DayForecastByCity(city) {
   const apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`;
   try {
@@ -49,25 +49,23 @@ function updateWeatherUI(data) {
   }
 
   currentWeatherElem.className = `${bgColor} text-white p-4 rounded-md`;
-  // currentWeatherElem.className = `text-white p-4 rounded-md`;
   currentWeatherElem.innerHTML = `
-      <div class="flex justify-between items-center">
-        <div class="flex flex-col">
-          <h1 class="text-2xl font-bold">${data.name}</h1>
-          <h1 class="text-lg">${formatDate(new Date())}</h1>
-          <br>
-          <p>Wind: ${data.wind.speed} m/s</p>
-          <p>Humidity: ${data.main.humidity}%</p>
-
+        <div class="flex justify-between items-center">
+            <div class="flex flex-col">
+                <h1 class="text-2xl font-bold">${data.name}</h1>
+                <h1 class="text-lg">${formatDate(new Date())}</h1>
+                <br>
+                <p>Wind: ${data.wind.speed} m/s</p>
+                <p>Humidity: ${data.main.humidity}%</p>
+            </div>
+            <div class="text-right">
+                <p class="lg:text-5xl md:text-3xl"> ${data.main.temp}°C</p>
+            </div>
+            <div>
+                <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-30 h-30" title="${description}"/>
+                <p class="text-xl text-center">${description}</p>
+            </div>
         </div>
-        <div class="text-right">
-          <p class="lg:text-5xl md:text-3xl"> ${data.main.temp}°C</p>
-        </div>
-        <div>
-          <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-30 h-30" title="${description}"/>
-          <p class="text-xl text-center">${description}</p>
-        </div>
-      </div>
     `;
 }
 
@@ -77,7 +75,7 @@ function updateForecastUI(forecastData) {
   forecastContainer.innerHTML = "";
 
   const today = new Date();
-  const nextFourDays = Array.from({ length: 5 }, (_, i) => {
+  const nextFourDays = Array.from({ length: 4 }, (_, i) => {
     const nextDay = new Date(today);
     nextDay.setDate(today.getDate() + i + 1);
     return nextDay;
@@ -125,12 +123,12 @@ function updateForecastUI(forecastData) {
       const formattedDate = formatDate(day);
 
       forecastElem.innerHTML = `
-        <p>${formattedDate}</p>
-        <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-12 h-12 mb-2" title="${description}"/>
-        <p>Temp: ${forecast.main.temp}°C</p>
-        <p>Wind: ${forecast.wind.speed} m/s</p>
-        <p>Humidity: ${forecast.main.humidity}%</p>
-      `;
+                <p>${formattedDate}</p>
+                <img src="https://openweathermap.org/img/wn/${iconCode}@2x.png" alt="${description}" class="w-12 h-12 mb-2" title="${description}"/>
+                <p>Temp: ${forecast.main.temp}°C</p>
+                <p>Wind: ${forecast.wind.speed} m/s</p>
+                <p>Humidity: ${forecast.main.humidity}%</p>
+            `;
 
       forecastContainer.appendChild(forecastElem);
     }
@@ -163,97 +161,88 @@ function saveRecentCity(city) {
   let cities = JSON.parse(localStorage.getItem("recentCities")) || [];
 
   // Remove city if it already exists in the array, then add it to the beginning
-  cities = cities.filter((c) => c !== city);
+  cities = cities.filter((c) => c.toLowerCase() !== city.toLowerCase());
   cities.unshift(city); // Add the city to the beginning of the array
 
-  if (cities.length > 10) cities.pop(); // Limit to the last 5 searches
+  if (cities.length > 10) cities.pop(); // Limit to the last 10 searches
 
   localStorage.setItem("recentCities", JSON.stringify(cities));
-  if (cities.length >= 1) {
-    const recentCitiesElem = document.getElementById("recentCities");
-    recentCitiesElem.classList.remove("hidden");
-  }
   updateRecentCitiesDropdown();
 }
 
 // Update the recent cities dropdown menu
-// function updateRecentCitiesDropdown() {
-//   const recentCitiesElem = document.getElementById("recentCities");
-//   recentCitiesElem.innerHTML = "";
-//   const cities = JSON.parse(localStorage.getItem("recentCities")) || [];
-//   if (cities.length >= 1) {
-//     recentCitiesElem.classList.remove("hidden");
-//   }
-//   cities.forEach((city) => {
-//     const cityElem = document.createElement("option");
-//     cityElem.classList.add(
-//       "block",
-//       "px-4",
-//       "py-2",
-//       "hover:bg-gray-200",
-//       "w-full",
-//       "text-left"
-//     );
-//     cityElem.textContent = city;
-//     cityElem.value = city;
-//     cityElem.onclick = async () => {
-//       const weatherData = await getWeatherByCity(city);
-//       const forecastData = await get5DayForecastByCity(city);
-//       const cityInput = document.getElementById("cityInput");
-//       cityInput.value = city;
-//       updateWeatherUI(weatherData);
-//       updateForecastUI(forecastData);
-//       // hideRecentCities();
-//     };
-//     recentCitiesElem.appendChild(cityElem);
-//   });
-// }
-
-// Update the recent cities dropdown menu
 function updateRecentCitiesDropdown() {
-  const recentCitiesElem = document.getElementById("recentCities");
-  recentCitiesElem.innerHTML = "";
+  const recentCitiesList = document.getElementById("recentCitiesList");
+  recentCitiesList.innerHTML = "";
   const cities = JSON.parse(localStorage.getItem("recentCities")) || [];
 
-  // Make the dropdown visible if there are recent searches
   if (cities.length > 0) {
-    recentCitiesElem.classList.remove("hidden");
-    recentCitiesElem.innerHTML +=
-      '<option value="" disabled selected>Select a recent search</option>';
-  } else {
-    recentCitiesElem.classList.add("hidden");
+    // Show the dropdown button with default text
+    const dropdownButton = document.getElementById("dropdownButton");
+    dropdownButton.querySelector("span").textContent = "Select a recent search";
   }
 
   cities.forEach((city) => {
-    const cityElem = document.createElement("option");
-    cityElem.value = city;
+    const cityElem = document.createElement("li");
+    cityElem.classList.add(
+      "px-4",
+      "py-2",
+      "hover:bg-gray-600",
+      "cursor-pointer"
+    );
     cityElem.textContent = city;
-    recentCitiesElem.appendChild(cityElem);
-  });
-
-  // Add an onchange event listener to the select element
-  recentCitiesElem.onchange = async () => {
-    const selectedCity = recentCitiesElem.value;
-    if (selectedCity) {
-      const weatherData = await getWeatherByCity(selectedCity);
-      const forecastData = await get5DayForecastByCity(selectedCity);
+    cityElem.onclick = async () => {
+      const weatherData = await getWeatherByCity(city);
+      const forecastData = await get5DayForecastByCity(city);
       const cityInput = document.getElementById("cityInput");
-      cityInput.value = selectedCity;
+      cityInput.value = city;
       updateWeatherUI(weatherData);
       updateForecastUI(forecastData);
-    }
-  };
+      toggleDropdown(); // Close the dropdown after selection
+    };
+    recentCitiesList.appendChild(cityElem);
+  });
+
+  // If no cities, hide the dropdown
+  if (cities.length === 0) {
+    const dropdownButton = document.getElementById("dropdownButton");
+    dropdownButton.querySelector("span").textContent = "Select a recent search";
+  }
+  if (cities.length > 0) {
+    const dropdownButton = document.getElementById("dropdownButton");
+    dropdownButton.classList.remove("hidden");
+  }
 }
+
+// Toggle the dropdown menu visibility
+function toggleDropdown() {
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  dropdownMenu.classList.toggle("hidden");
+}
+
+// Close the dropdown if clicked outside
+window.onclick = function (event) {
+  const dropdownButton = document.getElementById("dropdownButton");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  if (
+    !dropdownButton.contains(event.target) &&
+    !dropdownMenu.contains(event.target)
+  ) {
+    dropdownMenu.classList.add("hidden");
+  }
+};
 
 // Event listeners
 document.getElementById("searchBtn").addEventListener("click", async () => {
   const cityInput = document.getElementById("cityInput");
-  const city = cityInput.value;
+  const city = cityInput.value.trim();
   if (city) {
     const weatherData = await getWeatherByCity(city);
-    const forecastData = await get5DayForecastByCity(city);
-    updateWeatherUI(weatherData);
-    updateForecastUI(forecastData);
+    if (weatherData) {
+      const forecastData = await get5DayForecastByCity(city);
+      updateWeatherUI(weatherData);
+      updateForecastUI(forecastData);
+    }
   } else {
     alert("Please enter a valid city name");
   }
@@ -265,47 +254,65 @@ document.getElementById("currentLocationBtn").addEventListener("click", () => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
       const weatherData = await getWeatherByLocation(lat, lon);
-      const forecastData = await get5DayForecastByLocation(lat, lon);
-      updateWeatherUI(weatherData);
-      updateForecastUI(forecastData);
+      if (weatherData) {
+        const forecastData = await get5DayForecastByLocation(lat, lon);
+        updateWeatherUI(weatherData);
+        updateForecastUI(forecastData);
+      }
     });
   } else {
     alert("Geolocation is not supported by this browser.");
   }
 });
 
+// Fetch weather by location
 async function getWeatherByLocation(lat, lon) {
   const apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
-  const response = await fetch(apiURL);
-  return await response.json();
+  try {
+    const response = await fetch(apiURL);
+    if (!response.ok) throw new Error("Weather data not available");
+    const data = await response.json();
+    // saveRecentCity(data.name);
+    return data;
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
+// Fetch forecast by location
 async function get5DayForecastByLocation(lat, lon) {
   const apiURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
-  const response = await fetch(apiURL);
-  return await response.json();
+  try {
+    const response = await fetch(apiURL);
+    if (!response.ok) throw new Error("Forecast data not available");
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    alert(error.message);
+  }
 }
 
-// const recentButton = document.getElementById("recentBtn");
-const recentCitiesElem1 = document.getElementById("recentCities");
-
-// Automatically fetch and display the current location's weather on page load
+// Initialize the recent cities dropdown on page load
 window.onload = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(async (position) => {
       const lat = position.coords.latitude;
       const lon = position.coords.longitude;
       const weatherData = await getWeatherByLocation(lat, lon);
-      const forecastData = await get5DayForecastByLocation(lat, lon);
-      updateWeatherUI(weatherData);
-      updateForecastUI(forecastData);
-      // Initialize the recent cities dropdown on page load
-      updateRecentCitiesDropdown();
+      if (weatherData) {
+        const forecastData = await get5DayForecastByLocation(lat, lon);
+        updateWeatherUI(weatherData);
+        updateForecastUI(forecastData);
+        updateRecentCitiesDropdown();
+      }
     });
   } else {
     alert("Geolocation is not supported by this browser.");
   }
+  updateRecentCitiesDropdown();
 };
 
-// Initialize the recent cities dropdown on page load
-updateRecentCitiesDropdown();
+// Handle dropdown button click
+document
+  .getElementById("dropdownButton")
+  .addEventListener("click", toggleDropdown);
