@@ -1,4 +1,10 @@
 const apiKey = "48118fe8352ed4398205c8db917f6718";
+const currentWeatherElem = document.getElementById("currentWeather");
+const cityInput = document.getElementById("cityInput");
+const forecastContainer = document.getElementById("forecast");
+const recentCitiesList = document.getElementById("recentCitiesList");
+const dropdownMenu = document.getElementById("dropdownMenu");
+const dropdownButton = document.getElementById("dropdownButton");
 
 // Function to fetch current weather data by city name
 async function getWeatherByCity(city) {
@@ -29,12 +35,10 @@ async function get5DayForecastByCity(city) {
 
 // Function to update current weather in UI
 function updateWeatherUI(data) {
-  const currentWeatherElem = document.getElementById("currentWeather");
   const iconCode = data.weather[0].icon;
   const description =
     data.weather[0].description.charAt(0).toUpperCase() +
     data.weather[0].description.slice(1);
-  const cityInput = document.getElementById("cityInput");
   cityInput.value = data.name;
 
   let bgColor;
@@ -81,7 +85,6 @@ function updateWeatherUI(data) {
 
 // Function to update the 4-day forecast in UI starting from tomorrow
 function updateForecastUI(forecastData) {
-  const forecastContainer = document.getElementById("forecast");
   forecastContainer.innerHTML = "";
 
   const today = new Date();
@@ -186,7 +189,6 @@ function saveRecentCity(city) {
 
 // Update the recent cities dropdown menu
 function updateRecentCitiesDropdown() {
-  const recentCitiesList = document.getElementById("recentCitiesList");
   recentCitiesList.innerHTML = "";
   const cities = JSON.parse(localStorage.getItem("recentCities")) || [];
 
@@ -230,14 +232,11 @@ function updateRecentCitiesDropdown() {
 
 // Toggle the dropdown menu visibility
 function toggleDropdown() {
-  const dropdownMenu = document.getElementById("dropdownMenu");
   dropdownMenu.classList.toggle("hidden");
 }
 
 // Close the dropdown if clicked outside
 window.onclick = function (event) {
-  const dropdownButton = document.getElementById("dropdownButton");
-  const dropdownMenu = document.getElementById("dropdownMenu");
   if (
     !dropdownButton.contains(event.target) &&
     !dropdownMenu.contains(event.target)
@@ -248,7 +247,6 @@ window.onclick = function (event) {
 
 // Event listeners
 document.getElementById("searchBtn").addEventListener("click", async () => {
-  const cityInput = document.getElementById("cityInput");
   const city = cityInput.value.trim();
   if (city) {
     const weatherData = await getWeatherByCity(city);
